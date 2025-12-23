@@ -16,7 +16,7 @@
     <header class="site-header" id="top">
       <div class="container header-inner">
         <a class="brand" href="#top" aria-label="Hortus Home">
-          <img src="images/logo-optimized.svg" alt="Hortus Garden & Landscape" class="logo">
+          <img src="./images/logo-optimized.svg" onerror="this.src='./images/logo.svg'" alt="Hortus Garden & Landscape" class="logo">
         </a>
 
         <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
@@ -315,14 +315,12 @@
             <div id="modalNote" class="modal-note"></div>
           </div>
         </div>
-        <div class="modal-actions">
-          <button class="btn btn-outline" type="button" data-modal-close>Close</button>
-          <a class="btn" href="#quote" data-modal-cta>Get Quote</a>
         </div>
       </div>
     </div>
 
     <script src="./app.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/services.js"></script>
   </body>
 </html>

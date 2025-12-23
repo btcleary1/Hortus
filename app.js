@@ -692,13 +692,29 @@ function acceptContract() {
   const quote = calcQuote(input);
   const contract = buildContract(input, quote, signatureDataUrl);
 
-  // Persist acceptance locally (static site)
+  // Prepare email content
+  const subject = `New Contract Acceptance - ${input.customerName}`;
+  const body = `Customer: ${input.customerName}\n` +
+             `Email: ${input.customerEmail || 'Not provided'}\n` +
+             `Phone: ${input.customerPhone || 'Not provided'}\n\n` +
+             `Service: ${quote.service?.name || 'Not specified'}\n` +
+             `Total: $${quote.total?.toFixed(2) || '0.00'}\n\n` +
+             `Contract Details:\n${contract || 'No contract details'}\n\n` +
+             `Signature: ${signatureDataUrl ? 'Attached (see signature data)' : 'Not provided'}`;
+
+  // Create mailto link
+  const mailtoLink = `mailto:info@hortuslandscaping.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+  // Open user's default email client
+  window.location.href = mailtoLink;
+
+  // Save locally
   const payload = {
     acceptedAt: new Date().toISOString(),
     input,
     quote: {
-      serviceId: quote.service.id,
-      serviceName: quote.service.name,
+      serviceId: quote.service?.id,
+      serviceName: quote.service?.name,
       total: quote.total,
       subtotal: quote.subtotal,
       urgentFee: quote.urgentFee,
@@ -710,15 +726,27 @@ function acceptContract() {
 
   try {
     localStorage.setItem('hortusAcceptedContract', JSON.stringify(payload));
-  } catch {
-    // ignore
+  } catch (e) {
+    console.error('Failed to save contract locally:', e);
   }
 
+  // Show success message
   if (notice) {
-    notice.textContent = 'Accepted! Your contract has been saved locally in this browser. You can now schedule your consultation.';
+    notice.textContent = 'Your contract has been saved. Please send the email that opened to complete the process.';
     notice.hidden = false;
+    notice.className = 'notice-success';
   }
 
+  // Close the modal
+  closeModal();
+  // Reset the form
+  const form = document.getElementById('quote-form');
+  if (form) form.reset();
+  // Clear the signature
+  clearSignature();
+  // Reset to first step
+  setStep(1);
+  
   requestUpdate();
 }
 
