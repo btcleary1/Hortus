@@ -76,18 +76,38 @@ img{max-width:100%;display:block}
   padding:14px 0;
 }
 
-.brand{display:flex;align-items:baseline;gap:8px}
-.brand-mark{
-  font-family:"Playfair Display",Georgia,serif;
-  font-weight:700;
-  letter-spacing:.2px;
-  font-size:22px;
-  color:var(--brand);
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
 }
-.brand-sub{
-  font-family:"Playfair Display",Georgia,serif;
-  font-weight:600;
-  font-size:18px;
+
+.brand .logo {
+  height: 40px;
+  width: auto;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.brand-mark {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 700;
+  letter-spacing: .2px;
+  font-size: 22px;
+  color: var(--brand);
+  margin: 0;
+}
+
+.brand-sub {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--muted);
   color:var(--text);
   opacity:.9;
 }
